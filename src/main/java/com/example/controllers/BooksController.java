@@ -31,7 +31,8 @@ public class BooksController {
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("books", bookService.findAll());
+
+        model.addAttribute("books", bookService.sortedByYear());
         return "books/index";
     }
 

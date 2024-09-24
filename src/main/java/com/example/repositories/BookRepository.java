@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
-
+    List<Book> findAllByOrderByYearAsc();
 }

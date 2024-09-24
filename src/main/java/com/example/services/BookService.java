@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.repositories.BookRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,4 +68,8 @@ public class BookService {
             bookRepository.save(book);
         }
     }
+
+    public List<Book> sortedByYear() {
+        return bookRepository.findAllByOrderByYearAsc();
+        }
 }
