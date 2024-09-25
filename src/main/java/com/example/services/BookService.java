@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.repositories.BookRepository;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +27,7 @@ public class BookService {
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
+
     public Book findOne(int id) {
         Optional<Book> foundBook = bookRepository.findById(id);
         return foundBook.orElse(null);
@@ -50,26 +54,56 @@ public class BookService {
     }
 
     @Transactional
-    public void release(int id) {
-        Optional<Book> bookOptional = bookRepository.findById(id);
-        if (bookOptional.isPresent()) {
-            Book book = bookOptional.get();
-            book.setOwner(null);
-            bookRepository.save(book);
-        }
-    }
-
-    @Transactional
     public void assign(int id, Person selectedPerson) {
         Optional<Book> bookOptional = bookRepository.findById(id);
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
             book.setOwner(selectedPerson);
+            book.setTakenAt(LocalDateTime.now());
+            bookRepository.save(book);
+
+        }
+    }
+
+    @Transactional
+    public void release(int id) {
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        if (bookOptional.isPresent()) {
+            Book book = bookOptional.get();
+            book.setOwner(null);
+            book.setHandOver(LocalDateTime.now());
+            if(isOverdue(book.getId())) {
+                System.out.println("Book is overdue");
+            } else {
+                System.out.println("all right");
+            }
             bookRepository.save(book);
         }
     }
 
     public List<Book> sortedByYear() {
         return bookRepository.findAllByOrderByYearAsc();
+    }
+
+
+    public Boolean isOverdue(int id) {
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        if (bookOptional.isPresent()) {
+            Book book = bookOptional.get();
+            LocalDateTime takenAt = book.getTakenAt();
+            LocalDateTime handOver = book.getHandOver();
+            if (takenAt != null && handOver != null) {
+                if (Duration.between(takenAt, handOver).toDays() > 14) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+
         }
+        return false;
+    }
+
+
 }

@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Entity
@@ -30,6 +32,14 @@ public class Book {
     @Min(value = 1500, message = "Год должен быть больше, чем 1500")
     @Column(name = "year")
     private int year;
+
+    @Column(name = "taken_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime takenAt;
+
+    @Column(name = "hand_over")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime handOver;
 
     public Person getOwner() {
         return owner;
@@ -83,5 +93,21 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public LocalDateTime getTakenAt() {
+        return takenAt;
+    }
+
+    public void setTakenAt(LocalDateTime takenAt) {
+        this.takenAt = takenAt;
+    }
+
+    public LocalDateTime getHandOver() {
+        return handOver;
+    }
+
+    public void setHandOver(LocalDateTime handOver) {
+        this.handOver = handOver;
     }
 }
