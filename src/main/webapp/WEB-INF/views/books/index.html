@@ -6,6 +6,15 @@
 </head>
 <body>
 
+<!-- Форма для поиска книги -->
+<form th:action="@{/books/search}" method="get">
+    <input type="text" name="query" placeholder="Введите название или автора книги"/>
+    <button type="submit">Поиск</button>
+</form>
+
+<br/>
+
+<!-- Отображение списка книг -->
 <div th:each="book : ${books}">
     <a th:href="@{/books/{id}(id=${book.getId()})}"
        th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
@@ -18,9 +27,9 @@
     <a href="/books/new">Добавить книгу</a>
 </div>
 
-
 <div>
     <a href="/people">Go to People</a>
 </div>
+
 </body>
 </html>

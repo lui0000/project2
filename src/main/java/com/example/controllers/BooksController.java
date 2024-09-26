@@ -37,6 +37,10 @@ public class BooksController {
         return "books/index";
     }
 
+    public Book search(@RequestParam("query") String query, Model model){
+
+    }
+
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
         model.addAttribute("book", bookService.findOne(id));

@@ -105,5 +105,9 @@ public class BookService {
         return false;
     }
 
+    @Transactional
+    public Optional<Book> findBookByTitle(String title) {
+        return bookRepository.findByFirstnameStartingWith(title);
+    }
 
 }
