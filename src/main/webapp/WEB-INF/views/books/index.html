@@ -6,14 +6,6 @@
 </head>
 <body>
 
-<!-- Форма для поиска книги -->
-<form th:action="@{/books/search}" method="get">
-    <input type="text" name="query" placeholder="Введите название или автора книги"/>
-    <button type="submit">Поиск</button>
-</form>
-
-<br/>
-
 <!-- Отображение списка книг -->
 <div th:each="book : ${books}">
     <a th:href="@{/books/{id}(id=${book.getId()})}"
@@ -25,6 +17,27 @@
 
 <div>
     <a href="/books/new">Добавить книгу</a>
+</div>
+
+<hr/>
+
+<!-- Форма для поиска книги -->
+<form th:action="@{/books/search}" method="get">
+    <input type="text" name="query" placeholder="Введите название или автора книги"/>
+    <button type="submit">Поиск</button>
+</form>
+
+<br/>
+
+<!-- Отображение найденной книги -->
+<div th:if="${foundBook.isPresent()}">
+    <h3>Найдена книга:</h3>
+    <a th:href="@{/books/{id}(id=${foundBook.get().getId()})}"
+       th:text="${foundBook.get().getTitle() + ', ' + foundBook.get().getAuthor() + ', ' + foundBook.get().getYear()}">book</a>
+</div>
+
+<div th:if="${!foundBook.isPresent()}">
+    <p>Книга не найдена.</p>
 </div>
 
 <div>

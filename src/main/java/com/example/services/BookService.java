@@ -107,7 +107,7 @@ public class BookService {
 
     @Transactional
     public Optional<Book> findBookByTitle(String title) {
-        return bookRepository.findByFirstnameStartingWith(title);
+        return bookRepository.findByTitleStartingWith(title);
     }
 
 }

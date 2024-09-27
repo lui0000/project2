@@ -12,6 +12,7 @@ import com.example.services.BookService;
 import com.example.services.PeopleService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -37,9 +38,12 @@ public class BooksController {
         return "books/index";
     }
 
-    public Book search(@RequestParam("query") String query, Model model){
-
-    }
+//    @GetMapping()
+//    public String search(@RequestParam("query") String query, Model model){
+//        Optional<Book> foundBook = bookService.findBookByTitle(query);
+//        model.addAttribute("foundBook", foundBook);
+//        return "books/index";
+//    }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
