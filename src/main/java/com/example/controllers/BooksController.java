@@ -38,12 +38,12 @@ public class BooksController {
         return "books/index";
     }
 
-//    @GetMapping()
-//    public String search(@RequestParam("query") String query, Model model){
-//        Optional<Book> foundBook = bookService.findBookByTitle(query);
-//        model.addAttribute("foundBook", foundBook);
-//        return "books/index";
-//    }
+    @GetMapping("/search")
+    public String search(@RequestParam(value = "query", required = false) String query, Model model){
+        Optional<Book> foundBook = bookService.findBookByTitle(query);
+        model.addAttribute("foundBook", foundBook);
+        return "books/search";
+    }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
